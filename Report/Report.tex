@@ -1,0 +1,1104 @@
+\documentclass[11pt]{article}
+
+\usepackage{fontspec}
+\setmainfont{Arial}
+
+    \usepackage[breakable]{tcolorbox}
+    \usepackage{parskip} % Stop auto-indenting (to mimic markdown behaviour)
+\usepackage{underscore}
+
+\usepackage{listings}
+\usepackage{fontspec}
+\setmonofont{Arial}
+\lstset{
+  basicstyle=\ttfamily,  % Set the font to monospace
+  keywordstyle=\bfseries,  % Customize keyword style if desired
+  % Add more options as needed for your code style
+}
+  
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % Maintain compatibility with old templates. Remove in nbconvert 6.0
+    \let\Oldincludegraphics\includegraphics
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionFormat{nocaption}{}
+    \captionsetup{format=nocaption,aboveskip=0pt,belowskip=0pt}
+
+    \usepackage{float}
+    \floatplacement{figure}{H} % forces figures to be placed at the correct location
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+
+    \usepackage{iftex}
+    \ifPDFTeX
+        \usepackage[T1]{fontenc}
+        \IfFileExists{alphabeta.sty}{
+              \usepackage{alphabeta}
+          }{
+              \usepackage[mathletters]{ucs}
+              \usepackage[utf8x]{inputenc}
+          }
+    \else
+        \usepackage{fontspec}
+        \usepackage{unicode-math}
+    \fi
+
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics
+                         % to support a larger range
+    \makeatletter % fix for old versions of grffile with XeLaTeX
+    \@ifpackagelater{grffile}{2019/11/01}
+    {
+      % Do nothing on new versions
+    }
+    {
+      \def\Gread@@xetex#1{%
+        \IfFileExists{"\Gin@base".bb}%
+        {\Gread@eps{\Gin@base.bb}}%
+        {\Gread@@xetex@aux#1}%
+      }
+    }
+    \makeatother
+    \usepackage[Export]{adjustbox} % Used to constrain images to a maximum size
+    \adjustboxset{max size={0.9\linewidth}{0.9\paperheight}}
+
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    % The default LaTeX title has an obnoxious amount of whitespace. By default,
+    % titling removes some of it. It also provides customization options.
+    \usepackage{titling}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage{array}     % table support for pandoc >= 2.11.3
+    \usepackage{calc}      % table minipage width calculation for pandoc >= 2.11.1
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    \usepackage{mathrsfs}
+    
+
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+    \definecolor{ansi-default-inverse-fg}{HTML}{FFFFFF}
+    \definecolor{ansi-default-inverse-bg}{HTML}{000000}
+
+    % common color for the border for error outputs.
+    \definecolor{outerrorbackground}{HTML}{FFDFDF}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+
+
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatibility definitions
+    \def\gt{>}
+    \def\lt{<}
+    \let\Oldtex\TeX
+    \let\Oldlatex\LaTeX
+    \renewcommand{\TeX}{\textrm{\Oldtex}}
+    \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
+    % Document parameters
+    % Document title
+    \title{Datenanalyse- und visualisierung von Tankstellen und dessen Kraftstoffpreisdaten über den Zeitraum 2014 - April 2023 in Deutschland}
+\author{Ahmed Dhahir, Laelia Chi, Ole Schildt und Philipp Meyer}
+\date{\today}    
+    
+    
+    
+    
+% Pygments definitions
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\@namedef{PY@tok@w}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\@namedef{PY@tok@c}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cp}{\def\PY@tc##1{\textcolor[rgb]{0.61,0.40,0.00}{##1}}}
+\@namedef{PY@tok@k}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kp}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kt}{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\@namedef{PY@tok@o}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@ow}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\@namedef{PY@tok@nb}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@nf}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@nc}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@nn}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@ne}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.80,0.25,0.22}{##1}}}
+\@namedef{PY@tok@nv}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@no}{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\@namedef{PY@tok@nl}{\def\PY@tc##1{\textcolor[rgb]{0.46,0.46,0.00}{##1}}}
+\@namedef{PY@tok@ni}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.44,0.44,0.44}{##1}}}
+\@namedef{PY@tok@na}{\def\PY@tc##1{\textcolor[rgb]{0.41,0.47,0.13}{##1}}}
+\@namedef{PY@tok@nt}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@nd}{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\@namedef{PY@tok@s}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sd}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@si}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.64,0.35,0.47}{##1}}}
+\@namedef{PY@tok@se}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.36,0.12}{##1}}}
+\@namedef{PY@tok@sr}{\def\PY@tc##1{\textcolor[rgb]{0.64,0.35,0.47}{##1}}}
+\@namedef{PY@tok@ss}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@sx}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@m}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@gh}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\@namedef{PY@tok@gu}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\@namedef{PY@tok@gd}{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\@namedef{PY@tok@gi}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.52,0.00}{##1}}}
+\@namedef{PY@tok@gr}{\def\PY@tc##1{\textcolor[rgb]{0.89,0.00,0.00}{##1}}}
+\@namedef{PY@tok@ge}{\let\PY@it=\textit}
+\@namedef{PY@tok@gs}{\let\PY@bf=\textbf}
+\@namedef{PY@tok@gp}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\@namedef{PY@tok@go}{\def\PY@tc##1{\textcolor[rgb]{0.44,0.44,0.44}{##1}}}
+\@namedef{PY@tok@gt}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\@namedef{PY@tok@err}{\def\PY@bc##1{{\setlength{\fboxsep}{\string -\fboxrule}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}}
+\@namedef{PY@tok@kc}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kd}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kn}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kr}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@bp}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@fm}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@vc}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@vg}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@vi}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@vm}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@sa}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sb}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sc}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@dl}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@s2}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sh}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@s1}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@mb}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mf}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mh}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mi}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@il}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mo}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@ch}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cm}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cpf}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@c1}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cs}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % For linebreaks inside Verbatim environment from package fancyvrb.
+    \makeatletter
+        \newbox\Wrappedcontinuationbox
+        \newbox\Wrappedvisiblespacebox
+        \newcommand*\Wrappedvisiblespace {\textcolor{red}{\textvisiblespace}}
+        \newcommand*\Wrappedcontinuationsymbol {\textcolor{red}{\llap{\tiny$\m@th\hookrightarrow$}}}
+        \newcommand*\Wrappedcontinuationindent {3ex }
+        \newcommand*\Wrappedafterbreak {\kern\Wrappedcontinuationindent\copy\Wrappedcontinuationbox}
+        % Take advantage of the already applied Pygments mark-up to insert
+        % potential linebreaks for TeX processing.
+        %        {, <, #, %, $, ' and ": go to next line.
+        %        _, }, ^, &, >, - and ~: stay at end of broken line.
+        % Use of \textquotesingle for straight quote.
+        \newcommand*\Wrappedbreaksatspecials {%
+            \def\PYGZus{\discretionary{\char`\_}{\Wrappedafterbreak}{\char`\_}}%
+            \def\PYGZob{\discretionary{}{\Wrappedafterbreak\char`\{}{\char`\{}}%
+            \def\PYGZcb{\discretionary{\char`\}}{\Wrappedafterbreak}{\char`\}}}%
+            \def\PYGZca{\discretionary{\char`\^}{\Wrappedafterbreak}{\char`\^}}%
+            \def\PYGZam{\discretionary{\char`\&}{\Wrappedafterbreak}{\char`\&}}%
+            \def\PYGZlt{\discretionary{}{\Wrappedafterbreak\char`\<}{\char`\<}}%
+            \def\PYGZgt{\discretionary{\char`\>}{\Wrappedafterbreak}{\char`\>}}%
+            \def\PYGZsh{\discretionary{}{\Wrappedafterbreak\char`\#}{\char`\#}}%
+            \def\PYGZpc{\discretionary{}{\Wrappedafterbreak\char`\%}{\char`\%}}%
+            \def\PYGZdl{\discretionary{}{\Wrappedafterbreak\char`\$}{\char`\$}}%
+            \def\PYGZhy{\discretionary{\char`\-}{\Wrappedafterbreak}{\char`\-}}%
+            \def\PYGZsq{\discretionary{}{\Wrappedafterbreak\textquotesingle}{\textquotesingle}}%
+            \def\PYGZdq{\discretionary{}{\Wrappedafterbreak\char`\"}{\char`\"}}%
+            \def\PYGZti{\discretionary{\char`\~}{\Wrappedafterbreak}{\char`\~}}%
+        }
+        % Some characters . , ; ? ! / are not pygmentized.
+        % This macro makes them "active" and they will insert potential linebreaks
+        \newcommand*\Wrappedbreaksatpunct {%
+            \lccode`\~`\.\lowercase{\def~}{\discretionary{\hbox{\char`\.}}{\Wrappedafterbreak}{\hbox{\char`\.}}}%
+            \lccode`\~`\,\lowercase{\def~}{\discretionary{\hbox{\char`\,}}{\Wrappedafterbreak}{\hbox{\char`\,}}}%
+            \lccode`\~`\;\lowercase{\def~}{\discretionary{\hbox{\char`\;}}{\Wrappedafterbreak}{\hbox{\char`\;}}}%
+            \lccode`\~`\:\lowercase{\def~}{\discretionary{\hbox{\char`\:}}{\Wrappedafterbreak}{\hbox{\char`\:}}}%
+            \lccode`\~`\?\lowercase{\def~}{\discretionary{\hbox{\char`\?}}{\Wrappedafterbreak}{\hbox{\char`\?}}}%
+            \lccode`\~`\!\lowercase{\def~}{\discretionary{\hbox{\char`\!}}{\Wrappedafterbreak}{\hbox{\char`\!}}}%
+            \lccode`\~`\/\lowercase{\def~}{\discretionary{\hbox{\char`\/}}{\Wrappedafterbreak}{\hbox{\char`\/}}}%
+            \catcode`\.\active
+            \catcode`\,\active
+            \catcode`\;\active
+            \catcode`\:\active
+            \catcode`\?\active
+            \catcode`\!\active
+            \catcode`\/\active
+            \lccode`\~`\~
+        }
+    \makeatother
+
+    \let\OriginalVerbatim=\Verbatim
+    \makeatletter
+    \renewcommand{\Verbatim}[1][1]{%
+        %\parskip\z@skip
+        \sbox\Wrappedcontinuationbox {\Wrappedcontinuationsymbol}%
+        \sbox\Wrappedvisiblespacebox {\FV@SetupFont\Wrappedvisiblespace}%
+        \def\FancyVerbFormatLine ##1{\hsize\linewidth
+            \vtop{\raggedright\hyphenpenalty\z@\exhyphenpenalty\z@
+                \doublehyphendemerits\z@\finalhyphendemerits\z@
+                \strut ##1\strut}%
+        }%
+        % If the linebreak is at a space, the latter will be displayed as visible
+        % space at end of first line, and a continuation symbol starts next line.
+        % Stretch/shrink are however usually zero for typewriter font.
+        \def\FV@Space {%
+            \nobreak\hskip\z@ plus\fontdimen3\font minus\fontdimen4\font
+            \discretionary{\copy\Wrappedvisiblespacebox}{\Wrappedafterbreak}
+            {\kern\fontdimen2\font}%
+        }%
+
+        % Allow breaks at special characters using \PYG... macros.
+        \Wrappedbreaksatspecials
+        % Breaks at punctuation characters . , ; ? ! and / need catcode=\active
+        \OriginalVerbatim[#1,codes*=\Wrappedbreaksatpunct]%
+    }
+    \makeatother
+
+    % Exact colors from NB
+    \definecolor{incolor}{HTML}{303F9F}
+    \definecolor{outcolor}{HTML}{D84315}
+    \definecolor{cellborder}{HTML}{CFCFCF}
+    \definecolor{cellbackground}{HTML}{F7F7F7}
+
+    % prompt
+    \makeatletter
+    \newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+    \makeatother
+    \newcommand{\prompt}[4]{
+        {\ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}}
+    }
+    
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+\usepackage{listings}
+\lstset{
+  basicstyle=\ttfamily,
+  breaklines=true,
+  aboveskip=10pt, % adjust the space above the code block
+  belowskip=5pt, % adjust the space below the code block
+}
+
+
+
+\begin{document}
+    
+    \maketitle
+    
+
+    
+    \hypertarget{vorbereitung}{%
+\section{Vorbereitung}\label{vorbereitung}}
+
+    \hypertarget{einleitung}{%
+\subsection{Einleitung}\label{einleitung}}
+
+    Unser Datensatz mit dem Titel \textbf{``Historische Kraftstoffpreisdaten
+in Deutschland''} lässt sich unter
+https://dev.azure.com/tankerkoenig/\_git/tankerkoenig-data finden und
+ist in \textbf{Stations} und \textbf{Prices} aufgeteilt. Stations listet
+jede aktive Tankstelle in Deutschland auf, wohingegen in Prices alle
+Preisänderungen von Diesel, Super 95 (E5) und Super E10 von Juni 2014
+bis jetzt enthalten sind. Anfänglich stellten wir uns die Frage, wie es
+möglich sei die Fülle dieser Daten so akkurat zu erfassen. Unsere
+Hintergrundrecherche ergab, dass jede öffentliche Tankstelle seit dem
+31. August 2013 Preisänderungen von Super 95, Super E10 und Diesel in
+Echtzeit an die sog. \textbf{Markttransparenzstelle für Kraftstoffe} des
+Bundeskartellamtes melden muss. Auf Grund der Tatsache, dass das
+Bundeskartellamt die gewonnenen Daten ausschließlich lizensierten
+Spritpreis-Informationsdiensten über eine API-Schnittstelle zur
+Verfügung stellt, beziehen wir unsere Daten aus dem Archiv des Tankerkönigs, welches mit dem Befehl
+
+\begin{lstlisting}
+git clone https://tankerkoenig@dev.azure.com/tankerkoenig/tankerkoenig-data/_git/tankerkoenig-data
+\end{lstlisting}
+
+heruntergeladen werden kann. Die dort archivierten Daten werden seit
+Juni 2014 tagesweise archiviert und jeweils am Folgetag als
+Datenbank-Dump in Form einer CSV-Datei bereitgestellt. Auf diese Weise
+umfasst das Archiv mehr als 3.000 CSV-Dateien mit durchschnittlich ca.
+350.000 Einträgen, so dass man auf eine Gesamtanzahl von über 1
+Milliarde Datenpunkten kommt. Welche Problematiken diese riesige
+Datenmenge auslöste und wie wir diese Probleme letztendlich lösen
+konnten, erklären wir im weiteren Verlauf.
+
+Beschäftigen wir uns nun aber zuerst mit dem eigentlichen Ablauf dieser
+Datenvisualisierung. Anfänglich werden wir uns mit dem Datensatz
+vertraut machen, die Bedeutungen der verschiedenen Spalten klären und
+etwas Data Cleaning betreiben. Daraufhin werden wir ein Verständnis über
+die größten Tankstellenmarken und deren Marktanteile aufbauen und uns
+anschließend die geografischen Unterschiede anzeigen lassen. Hier werden
+wir speziell auf die, nach wie vor bestehenden, Unterschiede zwischen
+``Ost'' und ``West'' eingehen. Abschließend skizzieren wir die
+historische Preisentwicklung und werden die aktuellen und
+herausstechende Preisänderungen seit Beginn des Krieges in der Ukraine
+hervorheben.
+
+    \hypertarget{library-imports}{%
+\subsection{Library Imports}\label{library-imports}}
+
+    Damit wir unsere Daten fachgerecht bereinigen, präparieren und
+schlussendlich visualisieren können, importieren wir folgende, in der
+Datenanalyse- und visualisierung weit verbreitete, Biblotheken. Diese
+werden von uns zur Visualisierung und Aufbereitung der Daten benutzt und
+können teilweise als Pendant zu der in R häufig verwendeten Biblothek
+\emph{ggplot2} angesehen werden:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{pandas}: Eine Python-Bibliothek, die speziell für die
+  Datenmanipulation und -analyse entwickelt wurde. Sie ermöglicht es,
+  Datenframes zu erstellen und bietet eine Vielzahl nützlicher
+  Funktionen zur Datenbereinigung und -verarbeitung.
+\item
+  \textbf{matplotlib.pyplot}: Eine der bekanntesten Python-Bibliotheken
+  zur Erstellung von Diagrammen und Visualisierungen. Mit pyplot können
+  Sie eine Vielzahl von Diagrammtypen erstellen, darunter
+  Balkendiagramme, Liniendiagramme und Histogramme.
+\item
+  \textbf{seaborn}: Eine Python-Bibliothek zur Erstellung ansprechender
+  Diagramme und Visualisierungen. Sie baut auf matplotlib auf und bietet
+  einfachere Methoden zur Erstellung von Diagrammen.
+\item
+  \textbf{os}: Eine Python-Bibliothek, die Methoden zum Arbeiten mit dem
+  Betriebssystem bereitstellt, wie zum Beispiel zum Navigieren im
+  Dateisystem oder zum Erstellen von Verzeichnissen.
+\item
+  \textbf{PolygonPatch}: Die Klasse PolygonPatch wird in der Regel in
+  Verbindung mit anderen Bibliotheken wie matplotlib oder geopandas
+  verwendet, um visuelle Darstellungen von Polygonen in Diagrammen oder
+  Karten zu erstellen. Sie bietet eine bequeme Möglichkeit,
+  Polygon-Patches mit spezifischen Attributen wie Farben, Kantenbreiten
+  und Transparenz hinzuzufügen, um die visuelle Präsentation von
+  räumlichen Daten zu verbessern.
+\item
+  \textbf{shapefile}: Eine Python-Bibliothek zur Arbeit mit Shapefiles,
+  einem geografischen Vektordatendateiformat. Sie ermöglicht das Lesen,
+  Schreiben und Manipulieren von Shapefiles für die Analyse und
+  Visualisierung von geografischen Daten in Python.
+\item
+  \textbf{datetime}: Ein Modul in Python, das Funktionen und Klassen zur
+  Arbeit mit Datum und Zeit bereitstellt. Es ermöglicht das Erstellen,
+  Manipulieren und Formatieren von Datum- und Zeitobjekten. Mit dem
+  datetime-Modul können Berechnungen und Vergleiche zwischen
+  verschiedenen Zeitpunkten durchgeführt werden.
+\item
+  \textbf{dateutil.relativedelta}: Eine Funktion aus dem dateutil-Paket,
+  das auf das datetime-Modul aufbaut. Die dateutil.relativedelta
+  ermöglicht es, Zeitdifferenzen zwischen zwei Zeitpunkten in einem
+  flexiblen und intuitiven Format zu berechnen. Es erlaubt die Angabe
+  von relativen Änderungen wie ``2 Monate vorwärts'' oder ``1 Jahr und 3
+  Tage rückwärts'' und ermöglicht es, solche Zeitdifferenzen präzise zu
+  berechnen und auf Datum- oder Zeitobjekte anzuwenden.
+\end{enumerate}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{1}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+\PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+\PY{k+kn}{import} \PY{n+nn}{seaborn} \PY{k}{as} \PY{n+nn}{sns}
+\PY{k+kn}{import} \PY{n+nn}{os}
+\PY{k+kn}{from}   \PY{n+nn}{descartes} \PY{k+kn}{import} \PY{n}{PolygonPatch}
+\PY{k+kn}{import} \PY{n+nn}{shapefile}
+\PY{k+kn}{from} \PY{n+nn}{datetime} \PY{k+kn}{import} \PY{n}{datetime}
+\PY{k+kn}{from} \PY{n+nn}{dateutil}\PY{n+nn}{.}\PY{n+nn}{relativedelta} \PY{k+kn}{import} \PY{n}{relativedelta}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \hypertarget{data-imports}{%
+\subsection{Data Imports}\label{data-imports}}
+
+    \hypertarget{preprocessing}{%
+\subsubsection{Preprocessing}\label{preprocessing}}
+
+    Wie so oft geht das ganze nicht ohne kleine aber sehr hilfreichen
+Tricks, in unserem Fall \textbf{Preprocessing}. Preprocessing bezeichnet
+die Vorverarbeitung von Rohdaten, um sie für die weitere Verarbeitung
+und Analyse vorzubereiten. Da die Prices-CSV-Dateien insgesamt eine
+Größe von über 50 GB haben und jegliche pro Tankstelle anfallende
+Spritpreisaktualisierungen in Deutschland seit 2014 enthalten, mussten
+wir die Größe reduzieren, um sie effizient verarbeiten zu können. Wir
+entschieden uns, die Daten nach station\_id, Jahr und Monat zu
+gruppieren und die Durchschnittspreise für die Kraftstoffarten Diesel,
+Super 95 (E5) und Super E10 einmal pro Monat anstelle pro Minute zu
+berechnen und in neuen CSV-Dateien zu speichern. Dadurch konnten wir die
+Gesamtgröße von über 50 GB auf etwa 90 MB reduzieren. Die Auslagerung
+der Aggregation in eine separate Funktion dient der besseren Performance
+und besseren Lesbarkeit~des~Codes. Die detaillierte Beschreibung des
+Codes würde hier aber zu weit gehen, weshalb unser Code hierzu bei
+Interesse im Anhang zu finden ist.
+
+    \hypertarget{dataframes}{%
+\subsubsection{DataFrames}\label{dataframes}}
+
+    Nach dem uns nun die aggregierten Daten vorliegen werden die
+entstandenen CSV-Dateien anhand des folgenden Codes eingelesen und in
+verschiedenen DataFrames gespeichert. Dies ist ein wichtiger Schritt, um
+eine breitere Datenbasis für zukünftige Analysen zu erhalten und
+sicherzustellen, dass die Daten korrekt interpretiert werden können.
+Zusätzlich werden auch fehlerhafte CSV-Dateien gefiltert und
+übersprungen, um mögliche Fehler in den Daten zu vermeiden.
+
+Um eine einheitliche und korrekte Verarbeitung der Daten zu
+gewährleisten, wird die Datum-Spalte in das Datumformat umgewandelt.
+Durch das Einlesen und Zusammenführen der Daten aus verschiedenen
+CSV-Dateien in verschiedenen DataFrames wird eine bessere Analyse und
+Verarbeitung der Daten ermöglicht. Dies ist insbesondere von Vorteil, da
+die CSV-Dateien unterschiedliche Themenbereiche abdecken.
+
+Der Code durchläuft mittels Schleife den Ordner, in dem die CSV-Dateien
+gespeichert sind, liest diese ein und speichert die darin enthaltenen
+Daten in verschiedenen DataFrames. Für den Monat März 2023 wird ein
+leeres DataFrame ``march\_2023'' initialisiert, um die Daten zu
+speichern. Für den Ordner ``timeseries'' wird ebenfalls ein leeres
+DataFrame ``timeseries'' erstellt, um die Daten aus den CSV-Dateien zu
+speichern.
+
+Nach dem Einlesen und Verarbeiten der CSV-Dateien werden die
+Informationen zu den verschiedenen Stationen, von denen die Daten
+stammen, in das DataFrame ``stations'' geladen.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{2}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} path + df to store}
+\PY{n}{folder\PYZus{}path} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{04}\PY{l+s+s1}{\PYZsq{}}
+\PY{n}{april\PYZus{}2023} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} looping through folder + append + date fixing}
+\PY{k}{for} \PY{n}{filename} \PY{o+ow}{in} \PY{n}{os}\PY{o}{.}\PY{n}{listdir}\PY{p}{(}\PY{n}{folder\PYZus{}path}\PY{p}{)}\PY{p}{:}
+    \PY{k}{if} \PY{n}{filename}\PY{o}{.}\PY{n}{endswith}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+        \PY{n}{file\PYZus{}path} \PY{o}{=} \PY{n}{os}\PY{o}{.}\PY{n}{path}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{n}{folder\PYZus{}path}\PY{p}{,} \PY{n}{filename}\PY{p}{)}
+        \PY{k}{try}\PY{p}{:}
+            \PY{n}{temp\PYZus{}df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{n}{file\PYZus{}path}\PY{p}{)}
+            \PY{n}{temp\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{to\PYZus{}datetime}\PY{p}{(}\PY{n}{temp\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n+nb}{format}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{Y\PYZhy{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{m\PYZhy{}}\PY{l+s+si}{\PYZpc{}d}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{dt}\PY{o}{.}\PY{n}{date}
+            \PY{n}{april\PYZus{}2023} \PY{o}{=} \PY{n}{april\PYZus{}2023}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{temp\PYZus{}df}\PY{p}{)}
+        \PY{k}{except} \PY{n+ne}{Exception}\PY{p}{:}
+            \PY{c+c1}{\PYZsh{} if something is wrong in the csv file}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Error converting date column in }\PY{l+s+si}{\PYZob{}}\PY{n}{filename}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{. Skipping file...}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} path + df to store}
+\PY{n}{folder\PYZus{}path2} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{timeseries}\PY{l+s+s1}{\PYZsq{}}
+\PY{n}{timeseries} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} looping through folder + append + date fixing}
+\PY{k}{for} \PY{n}{filename} \PY{o+ow}{in} \PY{n}{os}\PY{o}{.}\PY{n}{listdir}\PY{p}{(}\PY{n}{folder\PYZus{}path2}\PY{p}{)}\PY{p}{:}
+    \PY{k}{if} \PY{n}{filename}\PY{o}{.}\PY{n}{endswith}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+        \PY{n}{file\PYZus{}path} \PY{o}{=} \PY{n}{os}\PY{o}{.}\PY{n}{path}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{n}{folder\PYZus{}path2}\PY{p}{,} \PY{n}{filename}\PY{p}{)}
+        \PY{n}{temp\PYZus{}df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{n}{file\PYZus{}path}\PY{p}{)}
+        \PY{k}{try}\PY{p}{:}
+            \PY{n}{timeseries} \PY{o}{=} \PY{n}{timeseries}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{temp\PYZus{}df}\PY{p}{)}
+        \PY{k}{except} \PY{n+ne}{Exception}\PY{p}{:}
+            \PY{c+c1}{\PYZsh{} if something is wrong in the csv file}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Error converting date column in }\PY{l+s+si}{\PYZob{}}\PY{n}{filename}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{. Skipping file...}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} read stations}
+\PY{n}{stations} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{stations.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+    \hypertarget{variablenbeschreibung}{%
+\subsection{Variablenbeschreibung}\label{variablenbeschreibung}}
+
+   Die vorliegenden Datensätze bestehen aus folgenden Variablen: Die Variable ``station\_uuid'' steht für ``Universally Unique
+Identifier'' und ist eine 128-Bit-Zahl, die zur Identifizierung von
+Objekten in Computersystemen verwendet wird und wurde von der Open
+Software Foundation (OSF) als Teil des Distributed Computing Environment
+(DCE) standardisiert und ist jetzt in RFC 4122 geregelt. ``city'' ist
+der Name der Stadt, in der die Tankstelle steht. In ``brand'' ist die
+Marke der Tankstelle genannt, wie z.B. ``ARAL'' oder ``Shell''.
+``post\_code'' ist die fünfstellige Postleitzahl des Ortes der Tankstelle. ``latitude'' ist der geographische Breitengrad in
+Grad, auf der sich die Tankstelle befindet. ``longitude'' ist der
+geographische Längengrad in Grad, auf der sich die Tankstelle befindet,
+welcher mit ``laditude'' die Koordinaten der Tankstelle bildet.
+Die Variablen ``diesel'', ``e10'' und ``e5'' des ``prices''-Datensatzes
+beinhalten den Preis des jeweiligen Kraftstoffes auf die dritte
+Nachkommastelle genau in Euro, z.B. ``1.689'' Euro. An welchem Tag die
+Daten erfasst wurden, wird in der Variable ``date'' dokumentiert, wobei
+das Datum das Format YYYY-MM-DD hat. Die Preise einer Zeile wurden
+gleichzeitig erfasst. Auch in Stations ist die die Spalte ``uuid''
+enthalten, so dass Tankstellendaten und Preise zusammengeführt werden
+können.
+
+\newpage
+    \hypertarget{data-cleaning}{%
+\subsection{Data Cleaning}\label{data-cleaning}}
+
+    In der Zeitreihenanalyse ist die Datenbereinigung ein wichtiger Schritt,
+um sicherzustellen, dass die verwendeten Daten korrekt und zuverlässig
+sind. Wir führen verschiedene Schritte durch, um sicherzustellen, dass
+die Daten sauber sind. Zunächst erstellen wir eine neue Spalte mit
+Datumsinformationen, um die Handhabung der zeitabhängigen Daten zu
+erleichtern. Dann filtern wir nur die für unsere Analyse relevanten
+Spalten in den Datenframes und entfernen Zeilen mit fehlenden oder
+unzuverlässigen Daten. Dadurch stellen wir sicher, dass unsere Analyse
+auf vertrauenswürdigen Daten basiert und aussagekräftige Ergebnisse
+liefert.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{3}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{}correcting date}
+\PY{n}{timeseries}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{timeseries}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{year}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{astype}\PY{p}{(}\PY{n+nb}{str}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{timeseries}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{month}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}:02\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{)}
+\PY{n}{timeseries}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{to\PYZus{}datetime}\PY{p}{(}\PY{n}{timeseries}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n+nb}{format}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{Y }\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{m}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{} filter for relevant variables}
+\PY{n}{stations} \PY{o}{=} \PY{n}{stations}\PY{p}{[}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{uuid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{city}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{brand}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{post\PYZus{}code}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{latitude}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{longitude}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}
+\PY{n}{timeseries} \PY{o}{=} \PY{n}{timeseries}\PY{p}{[}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{station\PYZus{}uuid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{diesel}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{e5}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{e10}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}
+\PY{n}{april\PYZus{}2023} \PY{o}{=} \PY{n}{april\PYZus{}2023}\PY{p}{[}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{station\PYZus{}uuid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{diesel}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{e5}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{e10}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}
+
+\PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{} renaming uuid}
+\PY{n}{stations} \PY{o}{=} \PY{n}{stations}\PY{o}{.}\PY{n}{rename}\PY{p}{(} \PY{n}{columns}\PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{uuid}\PY{l+s+s1}{\PYZsq{}} \PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{station\PYZus{}uuid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} drop NaN values and drop rows where diesel or e10 or e5 are 0}
+\PY{n}{stations}\PY{o}{.}\PY{n}{dropna}\PY{p}{(}\PY{n}{inplace}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+\PY{n}{timeseries}\PY{o}{.}\PY{n}{dropna}\PY{p}{(}\PY{n}{inplace}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+\PY{n}{april\PYZus{}2023}\PY{o}{.}\PY{n}{dropna}\PY{p}{(}\PY{n}{inplace}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+\PY{n}{timeseries} \PY{o}{=} \PY{n}{timeseries}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{p}{(}\PY{n}{timeseries}\PY{o}{.}\PY{n}{diesel} \PY{o}{!=} \PY{l+m+mi}{0}\PY{p}{)} \PY{o}{\PYZam{}} \PY{p}{(}\PY{n}{timeseries}\PY{o}{.}\PY{n}{e10} \PY{o}{!=} \PY{l+m+mi}{0}\PY{p}{)} \PY{o}{\PYZam{}} \PY{p}{(}\PY{n}{timeseries}\PY{o}{.}\PY{n}{e5} \PY{o}{!=} \PY{l+m+mi}{0}\PY{p}{)}\PY{p}{]}
+\PY{n}{march\PYZus{}2023} \PY{o}{=} \PY{n}{april\PYZus{}2023}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{p}{(}\PY{n}{april\PYZus{}2023}\PY{o}{.}\PY{n}{diesel} \PY{o}{!=} \PY{l+m+mi}{0}\PY{p}{)} \PY{o}{\PYZam{}} \PY{p}{(}\PY{n}{april\PYZus{}2023}\PY{o}{.}\PY{n}{e10} \PY{o}{!=} \PY{l+m+mi}{0}\PY{p}{)} \PY{o}{\PYZam{}} \PY{p}{(}\PY{n}{april\PYZus{}2023}\PY{o}{.}\PY{n}{e5} \PY{o}{!=} \PY{l+m+mi}{0}\PY{p}{)}\PY{p}{]}
+\end{Verbatim}
+\end{tcolorbox}
+
+
+
+\newpage
+    \hypertarget{plots}{%
+\section{Plots}\label{plots}}
+
+
+    \hypertarget{verteilung-der-deutschen-marktteilnehmer-in-der-tankstellenbranche}{%
+\subsection{Verteilung der deutschen Marktteilnehmer in der
+Tankstellenbranche}\label{verteilung-der-deutschen-marktteilnehmer-in-der-tankstellenbranche}}
+
+    Mit dem folgenden Code stellen wir einen Überblick über die in
+Deutschland vertretenen Tankstellenmarken und deren Marktanteile dar. Hierbei beschränken wir uns aus Gründen der besseren Übersichtlichkeit
+auf die Top 5. 
+
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{4}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} for same size etc}
+\PY{n}{title\PYZus{}fontsize} \PY{o}{=} \PY{l+m+mi}{20}
+\PY{n}{width} \PY{o}{=} \PY{l+m+mi}{14}
+
+\PY{c+c1}{\PYZsh{} Load the dataset}
+\PY{n}{brand\PYZus{}stations} \PY{o}{=} \PY{n}{stations}
+
+\PY{c+c1}{\PYZsh{} Filter for top 5 brands}
+\PY{n}{top\PYZus{}brands} \PY{o}{=} \PY{n}{brand\PYZus{}stations}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{brand}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{brand}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{count}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{reset\PYZus{}index}\PY{p}{(}\PY{n}{name}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{count}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{nlargest}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{count}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{top\PYZus{}brands\PYZus{}list} \PY{o}{=} \PY{n}{top\PYZus{}brands}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{brand}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{unique}\PY{p}{(}\PY{p}{)}
+\PY{n}{rest\PYZus{}brands} \PY{o}{=} \PY{n}{brand\PYZus{}stations}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{o}{\PYZti{}}\PY{n}{brand\PYZus{}stations}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{brand}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{isin}\PY{p}{(}\PY{n}{top\PYZus{}brands\PYZus{}list}\PY{p}{)}\PY{p}{]}\PY{o}{.}\PY{n}{agg}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{brand}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{count}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{)}\PY{o}{.}\PY{n}{reset\PYZus{}index}\PY{p}{(}\PY{p}{)}
+\PY{n}{rest\PYZus{}brands} \PY{o}{=} \PY{n}{rest\PYZus{}brands}\PY{o}{.}\PY{n}{rename}\PY{p}{(}\PY{n}{columns}\PY{o}{=}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{index}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{brand}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+m+mi}{0} \PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{count}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{)}
+\PY{n}{rest\PYZus{}brands}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{brand}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{rest\PYZus{}brands}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{brand}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{brand}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Rest}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} colors for brands}
+\PY{n}{custom\PYZus{}palette} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}1670B9}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}FFD400}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}DA0013}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}A526AB}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}109A76}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}777777}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} 
+
+\PY{c+c1}{\PYZsh{} creating figure}
+\PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{n}{width}\PY{p}{,}\PY{l+m+mi}{7}\PY{p}{)}\PY{p}{)}
+\PY{n}{sns}\PY{o}{.}\PY{n}{set\PYZus{}style}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{whitegrid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{title} \PY{o}{=} \PY{n}{fig}\PY{o}{.}\PY{n}{suptitle}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Marktanteile der Top 5 Marken}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{fontsize}\PY{o}{=} \PY{n}{title\PYZus{}fontsize}\PY{p}{,} \PY{n}{fontweight}\PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bold}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{title}\PY{o}{.}\PY{n}{set\PYZus{}x}\PY{p}{(}\PY{l+m+mf}{0.18}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} barplot}
+\PY{n}{sns}\PY{o}{.}\PY{n}{barplot}\PY{p}{(}\PY{n}{data}\PY{o}{=}\PY{n}{top\PYZus{}brands}\PY{p}{,} \PY{n}{y}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{brand}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{x}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{count}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ax}\PY{o}{=} \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{palette}\PY{o}{=} \PY{n}{custom\PYZus{}palette}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Add count inside each bar}
+\PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{v} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{top\PYZus{}brands}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{count}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+    \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{annotate}\PY{p}{(}\PY{n+nb}{str}\PY{p}{(}\PY{n}{v}\PY{p}{)}\PY{p}{,} \PY{n}{xy}\PY{o}{=}\PY{p}{(}\PY{n}{v}\PY{p}{,} \PY{n}{i}\PY{p}{)}\PY{p}{,} \PY{n}{va}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{center}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ha}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{right}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{white}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
+                \PY{n}{xytext}\PY{o}{=}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)}\PY{p}{,} \PY{n}{textcoords}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{offset points}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{fontweight}\PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bold}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Set plot attributes}
+\PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set}\PY{p}{(}\PY{n}{title}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Top 5 Marken}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{xlabel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Anzahl}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ylabel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Marke}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} add rest}
+\PY{n}{top\PYZus{}brands} \PY{o}{=} \PY{n}{top\PYZus{}brands}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{rest\PYZus{}brands}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Create a donut }
+\PY{n}{sizes} \PY{o}{=} \PY{n}{top\PYZus{}brands}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{count}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\PY{n}{labels} \PY{o}{=} \PY{n}{top\PYZus{}brands}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{brand}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\PY{n}{colors} \PY{o}{=} \PY{n}{custom\PYZus{}palette}\PY{p}{[}\PY{p}{:}\PY{n+nb}{len}\PY{p}{(}\PY{n}{sizes}\PY{p}{)}\PY{p}{]}
+
+\PY{c+c1}{\PYZsh{} white circle}
+\PY{n}{wedgeprops} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{edgecolor}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{w}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{linewidth}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{width}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mf}{0.35}\PY{p}{\PYZcb{}}
+\PY{c+c1}{\PYZsh{} set pie}
+\PY{n}{\PYZus{}}\PY{p}{,} \PY{n}{lab}\PY{p}{,} \PY{n}{pct} \PY{o}{=} \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{pie}\PY{p}{(}\PY{n}{sizes}\PY{p}{,} \PY{n}{labels}\PY{o}{=}\PY{n}{labels}\PY{p}{,} \PY{n}{colors}\PY{o}{=}\PY{n}{colors}\PY{p}{,} \PY{n}{startangle}\PY{o}{=}\PY{l+m+mi}{90}\PY{p}{,} 
+                    \PY{n}{wedgeprops}\PY{o}{=}\PY{n}{wedgeprops}\PY{p}{,} \PY{n}{autopct}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZpc{}1.1f}\PY{l+s+si}{\PYZpc{}\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{pctdistance}\PY{o}{=}\PY{l+m+mf}{0.82}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} set the color of the labels to red}
+\PY{n}{plt}\PY{o}{.}\PY{n}{setp}\PY{p}{(}\PY{n}{lab}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{fontsize}\PY{o}{=} \PY{l+m+mi}{12}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{setp}\PY{p}{(}\PY{n}{pct}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{white}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{fontsize}\PY{o}{=} \PY{l+m+mi}{10}\PY{p}{,} \PY{n}{fontweight}\PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bold}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Set plot attributes}
+\PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set}\PY{p}{(}\PY{n}{title}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Prozentuale Verteilung}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{xlabel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ylabel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Show the plot}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+\hspace{-2cm}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_22_1.png}
+    \end{center}
+
+Das Balkendiagramm ermöglicht es uns, schnell die Anzahl
+der Tankstellen für jede Marke zu vergleichen und festzustellen, welche
+Marken den größten Marktanteil haben. Die Hinzufügung der Anzahl-Werte
+innerhalb jedes Balkens liefert detailliertere Informationen und
+ermöglicht es uns, die genaue Anzahl der Tankstellen für
+jede~Marke~zu~sehen. Der Donut-Plot auf der rechten Seite gibt
+Aufschluss auf die prozentualen Marktanteile der Top 5 und ergänzt den
+Vergleich mit den restlichen Tankstellen.
+
+
+    { \hspace*{\fill} \\}
+    \hypertarget{geografische-visualisierung-der-top-5-tankstellenmarken-in-deutschland}{%
+\subsection{Geografische Visualisierung der Top 5 Tankstellenmarken in
+Deutschland}\label{geografische-visualisierung-der-top-5-tankstellenmarken-in-deutschland}}
+
+    Nachdem wir nun wissen, welche Tankstellenmarken in Deutschland am
+stärksten vertreten sind, ist die geografische Verteilung
+dieser~von~Interesse. Die folgenden Plots stellen die Tankstellen der
+größten 5 Marken sowohl als Gesamtübersicht, als auch aufgeschlüsselt
+pro Marke, dar.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Select only the top 5 brands and don\PYZsq{}t sort by count}
+\PY{n}{top\PYZus{}brands} \PY{o}{=} \PY{n}{stations}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{brand}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{n}{sort}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}\PY{o}{.}\PY{n}{nlargest}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{)}\PY{o}{.}\PY{n}{index}\PY{o}{.}\PY{n}{tolist}\PY{p}{(}\PY{p}{)}
+\PY{n}{df\PYZus{}map} \PY{o}{=} \PY{n}{stations}\PY{p}{[}\PY{n}{stations}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{brand}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{isin}\PY{p}{(}\PY{n}{top\PYZus{}brands}\PY{p}{)}\PY{p}{]}
+
+\PY{n}{fig}\PY{p}{,} \PY{n}{axes} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{n}{width}\PY{p}{,}\PY{l+m+mi}{11}\PY{p}{)}\PY{p}{)}
+\PY{n}{sns}\PY{o}{.}\PY{n}{set\PYZus{}style}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{whitegrid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} add a title to the map}
+\PY{n}{title} \PY{o}{=} \PY{n}{fig}\PY{o}{.}\PY{n}{suptitle}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Verteilung der Top 5 Tankstellenmarken in Deutschland}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{fontsize}\PY{o}{=} \PY{n}{title\PYZus{}fontsize}\PY{p}{,} \PY{n}{fontweight}\PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bold}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{n}{shapefile\PYZus{}data} \PY{o}{=} \PY{n}{shapefile}\PY{o}{.}\PY{n}{Reader}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DEU\PYZus{}adm0.shp}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} create legend labels and colors}
+\PY{n}{stations\PYZus{}loop} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Top 5}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{+} \PY{n}{top\PYZus{}brands}
+\PY{n}{legend\PYZus{}labels} \PY{o}{=} \PY{n}{top\PYZus{}brands}
+\PY{n}{legend\PYZus{}colors} \PY{o}{=} \PY{p}{[}\PY{n}{custom\PYZus{}palette}\PY{p}{[}\PY{n}{top\PYZus{}brands}\PY{o}{.}\PY{n}{index}\PY{p}{(}\PY{n}{brand}\PY{p}{)}\PY{p}{]} \PY{k}{for} \PY{n}{brand} \PY{o+ow}{in} \PY{n}{top\PYZus{}brands}\PY{p}{]}
+
+\PY{c+c1}{\PYZsh{} adding dots based on latitudes and longitudes}
+\PY{k}{for} \PY{n}{ax}\PY{p}{,} \PY{n}{string} \PY{o+ow}{in} \PY{n+nb}{zip}\PY{p}{(}\PY{n}{axes}\PY{o}{.}\PY{n}{flatten}\PY{p}{(}\PY{p}{)}\PY{p}{,}\PY{n}{stations\PYZus{}loop}\PY{p}{)}\PY{p}{:}
+    \PY{c+c1}{\PYZsh{} drawn shape file}
+    \PY{n}{poly}\PY{o}{=} \PY{n}{shapefile\PYZus{}data}\PY{o}{.}\PY{n}{shape}\PY{p}{(}\PY{p}{)}
+    \PY{n}{ax}\PY{o}{.}\PY{n}{add\PYZus{}patch}\PY{p}{(}\PY{n}{PolygonPatch}\PY{p}{(}\PY{n}{poly}\PY{p}{,} \PY{n}{fc}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}ffffff}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ec}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}000000}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.5}\PY{p}{,} \PY{n}{zorder}\PY{o}{=}\PY{l+m+mi}{2} \PY{p}{)}\PY{p}{)}
+
+    \PY{c+c1}{\PYZsh{} differ betwenn all and seperate}
+    \PY{k}{if} \PY{n}{string} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Top 5}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}   
+        \PY{c+c1}{\PYZsh{} print dots}
+        \PY{k}{for} \PY{n}{t}\PY{p}{,} \PY{n}{row} \PY{o+ow}{in} \PY{n}{df\PYZus{}map}\PY{o}{.}\PY{n}{iterrows}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+            \PY{n}{ax}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{row}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{longitude}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{row}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{latitude}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{marker}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{o}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{markersize}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{,} 
+                    \PY{n}{color}\PY{o}{=}\PY{n}{custom\PYZus{}palette}\PY{p}{[}\PY{n}{top\PYZus{}brands}\PY{o}{.}\PY{n}{index}\PY{p}{(}\PY{n}{row}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{brand}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+            
+        \PY{c+c1}{\PYZsh{} add legend without color}
+        \PY{n}{handles\PYZus{}all} \PY{o}{=} \PY{p}{[}\PY{n}{plt}\PY{o}{.}\PY{n}{Line2D}\PY{p}{(}\PY{p}{[}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{p}{]}\PY{p}{,} \PY{n}{linestyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{n}{string}\PY{p}{,} \PY{n}{marker}\PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{None}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{]}
+        \PY{n}{ax}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{n}{handles}\PY{o}{=}\PY{n}{handles\PYZus{}all}\PY{p}{,} \PY{n}{loc}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{upper center}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ncol}\PY{o}{=}\PY{n+nb}{len}\PY{p}{(}\PY{n}{legend\PYZus{}labels}\PY{p}{)}\PY{p}{,} \PY{n}{labelcolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{frameon}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+
+    \PY{k}{else}\PY{p}{:}
+        \PY{c+c1}{\PYZsh{} print dots}
+        \PY{k}{for} \PY{n}{t}\PY{p}{,} \PY{n}{row} \PY{o+ow}{in} \PY{n}{df\PYZus{}map}\PY{p}{[}\PY{n}{df\PYZus{}map}\PY{o}{.}\PY{n}{brand} \PY{o}{==} \PY{n}{string}\PY{p}{]}\PY{o}{.}\PY{n}{iterrows}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+            \PY{n}{ax}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{row}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{longitude}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{row}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{latitude}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{marker}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{o}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{markersize}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{,} 
+                    \PY{n}{color}\PY{o}{=}\PY{n}{custom\PYZus{}palette}\PY{p}{[}\PY{n}{top\PYZus{}brands}\PY{o}{.}\PY{n}{index}\PY{p}{(}\PY{n}{row}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{brand}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} add legend to the map}
+        \PY{n}{handles} \PY{o}{=} \PY{p}{[}\PY{n}{plt}\PY{o}{.}\PY{n}{Line2D}\PY{p}{(}\PY{p}{[}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{p}{]}\PY{p}{,} \PY{n}{linestyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{n}{string}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{n}{custom\PYZus{}palette}\PY{p}{[}\PY{n}{top\PYZus{}brands}\PY{o}{.}\PY{n}{index}\PY{p}{(}\PY{n}{string}\PY{p}{)}\PY{p}{]}\PY{p}{)}\PY{p}{]}
+        \PY{n}{ax}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{n}{handles}\PY{o}{=}\PY{n}{handles}\PY{p}{,} \PY{n}{loc}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{upper center}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ncol}\PY{o}{=}\PY{n+nb}{len}\PY{p}{(}\PY{n}{legend\PYZus{}labels}\PY{p}{)}\PY{p}{,} \PY{n}{labelcolor}\PY{o}{=}\PY{n}{custom\PYZus{}palette}\PY{p}{[}\PY{n}{top\PYZus{}brands}\PY{o}{.}\PY{n}{index}\PY{p}{(}\PY{n}{string}\PY{p}{)}\PY{p}{]}\PY{p}{,} \PY{n}{frameon}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+            
+    \PY{c+c1}{\PYZsh{} Remove stuff around}
+    \PY{n}{ax}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{k+kc}{False}\PY{p}{)}
+    \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}xticks}\PY{p}{(}\PY{p}{[}\PY{p}{]}\PY{p}{)}
+    \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}yticks}\PY{p}{(}\PY{p}{[}\PY{p}{]}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Adjust spacing}
+\PY{n}{fig}\PY{o}{.}\PY{n}{subplots\PYZus{}adjust}\PY{p}{(}\PY{n}{top}\PY{o}{=}\PY{l+m+mf}{0.94}\PY{p}{,} \PY{n}{hspace}\PY{o}{=}\PY{l+m+mi}{0} \PY{p}{,} \PY{n}{wspace}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+\PY{n}{title}\PY{o}{.}\PY{n}{set\PYZus{}y}\PY{p}{(}\PY{l+m+mf}{0.97}\PY{p}{)}
+\PY{n}{title}\PY{o}{.}\PY{n}{set\PYZus{}x}\PY{p}{(}\PY{l+m+mf}{0.388}\PY{p}{)}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    Deutschland verfügt über ein großflächiges Tankstellennetz, das sich
+jedoch ungleichmäßig auf verschiedene Regionen verteilt. Insbesondere im
+Ruhrgebiet, Berlin und Frankfurt sowie weiteren dicht besiedelten
+Gebieten gibt es zahlreiche Tankstellen. Im Vergleich dazu ist die
+Anzahl der Tankstellen in weniger besiedelten Regionen, wie
+Mecklenburg-Vorpommern vergleichsweise gering. Es gibt auch Unterschiede
+zwischen Ost und West, da im Osten Deutschlands weniger Tankstellen
+vorhanden sind und nicht alle Top-5-Tankstellenmarken, wie zum Beispiel
+AVIA, dort vertreten sind. Die Geomap zeigt somit die Verteilung der
+Top-5-Tankstellenmarken in Deutschland auf und hebt die heutzutage in
+Teilen immer noch bestehenden infrastrukturellen Unterschiede zwischen
+Ost und West hervor.
+
+\begin{center}
+\hspace{-2cm}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_25_0.png}
+    \end{center}    
+
+
+
+
+    \hypertarget{aktueller-spritpreisvergleich-der-marken}{%
+\subsection{Aktueller Spritpreisvergleich der
+Marken}\label{aktueller-spritpreisvergleich-der-marken}}
+
+    Wir hatten die Vermutung, dass Kraftstoff-Preise in den neuen Länder
+geringer sein könnten, als in den alten Ländern wie es öfter der Falls
+ist z.B. bei Grundstücken. Um dies zu überprüfen, erstellen wir ein
+Balken-Diagramm mit den durchschnittlichen Preisen der Kraftstoffe je
+Bundesland. Dabei bezieht sich der Durchschnitt auf die Preise im März
+des Jahres 2023. Da der ursprüngliche Datensatz keine Bundesländer
+enthält, wird ein externer Datensatz benötigt, der jeder Postleitzahl
+ein Bundesland zuordnet. Die Postleitzahl wird benötigt, um sie als
+Schlüssel zum Vereinen der beiden Datensetze zu verwenden. Man hätte
+auch die Stadt als Schlüssel benutzen können, allerdings besteht die
+Möglichkeit, dass verschiedene Städte den gleichen Namen tragen. Daher
+haben wir uns für die eindeutigen Postleitzahlen entschieden. Jedoch
+könnte nicht nur der Vergleich zwischen Ost- und West-Ländern
+interessant sein, sondern auch der Vergleich zwischen allen 16
+Bundesländern, weswegen wir die Preise nur bis zur Bundesländer-Ebene
+aggregieren.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{6}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} mean per station}
+\PY{n}{month\PYZus{}means} \PY{o}{=} \PY{n}{april\PYZus{}2023}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{station\PYZus{}uuid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{reset\PYZus{}index}\PY{p}{(}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} adding postcode to stations}
+\PY{n}{month\PYZus{}means} \PY{o}{=} \PY{n}{month\PYZus{}means}\PY{o}{.}\PY{n}{merge}\PY{p}{(}\PY{n}{stations}\PY{p}{[}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{station\PYZus{}uuid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{post\PYZus{}code}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}\PY{p}{,} \PY{n}{on}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{station\PYZus{}uuid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} mean by postcode}
+\PY{n}{month\PYZus{}postcode\PYZus{}means} \PY{o}{=} \PY{n}{month\PYZus{}means}\PY{o}{.}\PY{n}{astype}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{post\PYZus{}code}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{int}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{)}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{post\PYZus{}code}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{reset\PYZus{}index}\PY{p}{(}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} merging postcode to Bundesländer + calculating mean of it }
+\PY{n}{plz\PYZus{}bundesland} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{plz\PYZhy{}buland\PYZhy{}kreis.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{delimiter}\PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{;}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plz\PYZus{}bundesland} \PY{o}{=} \PY{n}{plz\PYZus{}bundesland}\PY{p}{[}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{plz}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bundesland}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}\PY{o}{.}\PY{n}{drop\PYZus{}duplicates}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{rename}\PY{p}{(}\PY{n}{columns}\PY{o}{=}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{plz}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{post\PYZus{}code}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{)}
+\PY{n}{bundland\PYZus{}preise} \PY{o}{=} \PY{n}{month\PYZus{}postcode\PYZus{}means}\PY{o}{.}\PY{n}{merge}\PY{p}{(}\PY{n}{plz\PYZus{}bundesland}\PY{p}{,} \PY{n}{on}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{post\PYZus{}code}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bundesland}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{reset\PYZus{}index}\PY{p}{(}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} creating a figure to have three barplots next to each other + title}
+\PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{n}{width}\PY{p}{,} \PY{l+m+mi}{11}\PY{p}{)}\PY{p}{)}
+\PY{n}{sns}\PY{o}{.}\PY{n}{set\PYZus{}style}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{whitegrid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{title} \PY{o}{=} \PY{n}{fig}\PY{o}{.}\PY{n}{suptitle}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ost\PYZhy{}West Vergleich der Treibstoffarten (Durchschnitt April)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{fontsize}\PY{o}{=} \PY{n}{title\PYZus{}fontsize}\PY{p}{,} \PY{n}{fontweight}\PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bold}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{title}\PY{o}{.}\PY{n}{set\PYZus{}x}\PY{p}{(}\PY{l+m+mf}{0.25}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} for iterating }
+\PY{n}{fuelTypes} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{diesel}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{e5}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{e10}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} 
+
+\PY{c+c1}{\PYZsh{} color codes for fuel types }
+\PY{n}{colors} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}000000}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}1670B9}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}46b340}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} 
+
+\PY{c+c1}{\PYZsh{} adding transperancy column }
+\PY{n}{neue\PYZus{}laender} \PY{o}{=} \PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Brandenburg}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Mecklenburg\PYZhy{}Vorpommern}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Sachsen}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Sachsen\PYZhy{}Anhalt}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Thüringen}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}
+\PY{n}{bundland\PYZus{}preise}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{alpha}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{bundland\PYZus{}preise}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bundesland}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{l+m+mi}{1} \PY{k}{if} \PY{n}{x} \PY{o+ow}{in} \PY{n}{neue\PYZus{}laender} \PY{k}{else} \PY{l+m+mf}{0.6}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} plotting a barplot per fuelType }
+\PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{fuelType} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{fuelTypes}\PY{p}{)}\PY{p}{:}
+    \PY{n}{bundland\PYZus{}preise\PYZus{}sorted} \PY{o}{=} \PY{n}{bundland\PYZus{}preise}\PY{o}{.}\PY{n}{sort\PYZus{}values}\PY{p}{(}\PY{n}{by}\PY{o}{=}\PY{n}{fuelType}\PY{p}{,} \PY{n}{ascending}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+    \PY{n}{sns}\PY{o}{.}\PY{n}{barplot}\PY{p}{(}\PY{n}{data}\PY{o}{=}\PY{n}{bundland\PYZus{}preise\PYZus{}sorted}\PY{p}{,} \PY{n}{y}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bundesland}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{x}\PY{o}{=}\PY{n}{fuelType}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{n}{colors}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,} \PY{n}{ax}\PY{o}{=}\PY{n}{ax}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,}
+                \PY{n}{order}\PY{o}{=}\PY{n}{bundland\PYZus{}preise\PYZus{}sorted}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bundesland}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+    
+    \PY{c+c1}{\PYZsh{} correct the x\PYZhy{}ax}
+    \PY{n}{ax}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}xlim}\PY{p}{(}\PY{l+m+mf}{1.55}\PY{p}{,} \PY{l+m+mf}{1.89}\PY{p}{)}
+
+    \PY{c+c1}{\PYZsh{} modifying alpha based on alpha column and text in the bars with annotate }
+    \PY{k}{for} \PY{n}{bar}\PY{p}{,} \PY{n}{alpha} \PY{o+ow}{in} \PY{n+nb}{zip}\PY{p}{(}\PY{n}{ax}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{patches}\PY{p}{,} \PY{n}{bundland\PYZus{}preise\PYZus{}sorted}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{alpha}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+        \PY{n}{bar}\PY{o}{.}\PY{n}{set\PYZus{}alpha}\PY{p}{(}\PY{n}{alpha}\PY{p}{)}
+        \PY{n}{ax}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{annotate}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZpc{}.3f}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{n}{bar}\PY{o}{.}\PY{n}{get\PYZus{}width}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{xy}\PY{o}{=}\PY{p}{(}\PY{n}{bar}\PY{o}{.}\PY{n}{get\PYZus{}width}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{bar}\PY{o}{.}\PY{n}{get\PYZus{}y}\PY{p}{(}\PY{p}{)}\PY{o}{+}\PY{n}{bar}\PY{o}{.}\PY{n}{get\PYZus{}height}\PY{p}{(}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{,}
+                       \PY{n}{xytext}\PY{o}{=}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{45}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)}\PY{p}{,} \PY{n}{textcoords}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{offset pixels}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ha}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{left}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{va}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{center}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{white}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        
+\PY{c+c1}{\PYZsh{} array for wanted fuel types }
+\PY{n}{fuelTypes\PYZus{}label} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Diesel}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Super 95}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Super E10}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+
+\PY{c+c1}{\PYZsh{} form changes and plotting}
+\PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{fuelType\PYZus{}label} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{fuelTypes\PYZus{}label}\PY{p}{)}\PY{p}{:}
+    \PY{n}{ax}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{set}\PY{p}{(}\PY{n}{title}\PY{o}{=}\PY{n}{fuelType\PYZus{}label}\PY{p}{,} \PY{n}{ylabel}\PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Bundesländer}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{xlabel}\PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Preis in Euro}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{tight\PYZus{}layout}\PY{p}{(}\PY{p}{)}    
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+\hspace{-2cm}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_29_1.png}
+    \end{center}
+
+In den oberen Plots sind die östlichen Bundesländer durch den jeweils intensiveren Farbton hervorgehoben. Anhand des Plots lässt sich erkennen, dass die Treibstoffart Diesel in den östlichen Bundesländern vergleichsweise teurer ist. Startend mit Brandenburg und endend mit Sachsen-Anhalt belegen hierbei vier der fünf östlichen Bundesländer, mit der Ausnahme von Sachsen, die Plätze 3 bis 6 im Preisvergleich. Auf die Treibstoffgruppe Benzin, bestehend aus Super 95 und Super E10 lässt sich diese Erkenntnis jedoch nicht ausweiten. Hier gliedern sich die östlichen Bundesländer tendenziell in die günstigere Hälfte ein. 
+
+\newpage
+    \hypertarget{preisentwicklung-der-kraftstoffe}{%
+\subsection{Preisentwicklung der
+Kraftstoffe}\label{preisentwicklung-der-kraftstoffe}}
+
+    Im Folgenden wollen wir die Preisentwicklung der Treibstoffarten
+(Diesel, Super 95 und Super E10) aufzeigen. Dabei gehen wir gesondert
+auf die Enwicklung der Preise unter Einfluss des Ukrainekiegs ein, so
+dass wir den Zeitabschnitt ab 2021 vergrößert als Nebenvisualisierung
+darstellen.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{7}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} creating df with wanted vars}
+\PY{n}{preisentwicklung} \PY{o}{=} \PY{n}{timeseries}\PY{p}{[}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{diesel}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{e10}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{e5}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}
+
+\PY{c+c1}{\PYZsh{} creating figure}
+\PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{n}{width}\PY{p}{,}\PY{l+m+mi}{7}\PY{p}{)}\PY{p}{)}
+\PY{n}{sns}\PY{o}{.}\PY{n}{set\PYZus{}style}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{whitegrid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} style an form changes }
+\PY{n}{title} \PY{o}{=} \PY{n}{fig}\PY{o}{.}\PY{n}{suptitle}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Preisentwicklung der Treibstoffarten}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{fontsize}\PY{o}{=} \PY{n}{title\PYZus{}fontsize}\PY{p}{,} \PY{n}{fontweight}\PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bold}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{title}\PY{o}{.}\PY{n}{set\PYZus{}x}\PY{p}{(}\PY{l+m+mf}{0.18}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} creating line plots }
+\PY{k}{for} \PY{n}{fuelType}\PY{p}{,} \PY{n}{label}\PY{p}{,} \PY{n}{color} \PY{o+ow}{in} \PY{n+nb}{zip}\PY{p}{(}\PY{n}{fuelTypes}\PY{p}{,}\PY{n}{fuelTypes\PYZus{}label}\PY{p}{,} \PY{n}{colors}\PY{p}{)}\PY{p}{:}
+    \PY{n}{sns}\PY{o}{.}\PY{n}{lineplot}\PY{p}{(}\PY{n}{data}\PY{o}{=}\PY{n}{preisentwicklung}\PY{p}{,} \PY{n}{x}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{y}\PY{o}{=}\PY{n}{fuelType}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{n}{label}\PY{p}{,}\PY{n}{ax}\PY{o}{=} \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{color}\PY{o}{=} \PY{n}{color} \PY{p}{)}
+    \PY{n}{sns}\PY{o}{.}\PY{n}{lineplot}\PY{p}{(}\PY{n}{data}\PY{o}{=}\PY{n}{preisentwicklung}\PY{p}{[}\PY{n}{preisentwicklung}\PY{o}{.}\PY{n}{date} \PY{o}{\PYZgt{}}\PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2021\PYZhy{}01\PYZhy{}01}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} 
+                 \PY{n}{x}\PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{y}\PY{o}{=} \PY{n}{fuelType}\PY{p}{,} \PY{n}{ax}\PY{o}{=} \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{color}\PY{o}{=} \PY{n}{color} \PY{p}{)}
+    
+\PY{n}{line\PYZus{}label} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Invasion Russlands}\PY{l+s+s1}{\PYZsq{}}    
+\PY{n}{line\PYZus{}date} \PY{o}{=} \PY{n}{datetime}\PY{o}{.}\PY{n}{strptime}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2022 02}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{Y }\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{m}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{axvline}\PY{p}{(}\PY{n}{x}\PY{o}{=}\PY{n}{line\PYZus{}date}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{red}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{linestyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{dotted}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=} \PY{n}{line\PYZus{}label}\PY{p}{)}
+\PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{axvline}\PY{p}{(}\PY{n}{x}\PY{o}{=}\PY{n}{line\PYZus{}date}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{red}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{linestyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{dotted}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Add legend and style and form changes after plotting}
+\PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+\PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set}\PY{p}{(}\PY{n}{title}\PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2014 \PYZhy{} Heute}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{xlabel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Zeit}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ylabel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Preis pro Liter in Euro}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set}\PY{p}{(}\PY{n}{title}\PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2021 \PYZhy{} Heute (Zoom Ukrainekrieg)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{xlabel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Zeit}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ylabel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} plotting}
+\PY{n}{plt}\PY{o}{.}\PY{n}{tight\PYZus{}layout}\PY{p}{(}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+\hspace{-2cm}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_33_0.png}
+    \end{center}
+    
+    Die zwei oberen Grafiken veranschaulicht die Spritpreisentwicklungen der
+3 Primärkraftstoffe Diesel, Super 95 und Super E10. Die x-Achse
+beschreibt die Zeit in Jahren, während die y-Achse Aufschluss auf den
+Preis pro Liter in Euro gibt. Der Grafik kann entnommen werden, dass bis
+auf ein paar Ausnahmen Diesel der günstigere und Super 95 der teuerste
+Kraftstoff ist.
+
+Die granularere Darstellung der Achsen im rechten Plot gleicht einem
+Zoom-Effekt und stellt somit den Zeitraum der Jahre 2021 bis heute dar.
+Dieser Zeitraum ist wegen des starken Preisanstieges, ausgelöst durch
+den Angriffskrieg Russlands auf die Ukraine und der Vielzahl an
+Preiseinflüssen hervorzuheben. Anfang des Jahres 2022 ist ein Anstieg
+der Spritpreise basierend auf dem Anstieg des Ölpreises auf Basis guter
+Konjunkturaussichten, zu erkennen. Der auf den 24. Februar~2022 folgende
+starke Spritpreisanstieg lässt sich wie folgt erklären. Die Angst vor
+Lieferengpässen im Energiebereich auf Grund der damals drohenden
+Sanktionen führte zur Preisexplosionen bei Öl und Gas, schließlich waren
+damals die Ausmaße nicht bekannt. Die Angst vor Energieknappheit und die
+damit verbundene erhöhte Zahlungsbereitschaft der Abnehmer führte bei
+Investoren zu Spekulationen auf steigende Preise, welche natürlich
+selbst in gewissen Maßen zur Preissteigerung beitrugen.
+
+
+\newpage
+   \hypertarget{anhang}{%
+\section{Anhang}\label{anhang}}
+
+\hypertarget{preprocessing}{%
+\subsection{Preprocessing}
+\label{preprocessing}}
+
+Der gegebene Code durchläuft alle CSV-Dateien in einem bestimmten Ordner und konsolidiert ihre Daten in einem DataFrame. Die Daten werden dann aggregiert, um den durchschnittlichen (mean) Preis pro Station, Jahr und Monat zu berechnen. Der aggregierte Datensatz wird dann in einer neuen CSV-Datei gespeichert.
+
+Der Import der Python-Bibliothek \textbf{glob} ermöglicht das Durchsuchen von Verzeichnissen nach Dateinamen oder -mustern. Mit der glob-Bibliothek können Dateilisten basierend auf bestimmten Kriterien z. B. alle Dateien mit einer bestimmten Erweiterung (* .txt) oder Dateien, die einem bestimmten Muster entsprechen (präfix_ *.csv),  erstellt werden. Sie bietet eine einfache Möglichkeit, Dateien in einem Verzeichnis zu filtern und auszuwählen, basierend auf ihren Namen oder anderen Eigenschaften. Die glob-Bibliothek ist besonders nützlich, wenn eine große Anzahl von Dateien vorliegt und nur eine bestimmte Auswahl davon verarbeiten möchten.
+
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{1}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{glob}
+
+\PY{c+c1}{\PYZsh{} Create an empty list to hold the data from each file}
+\PY{n}{data\PYZus{}list} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+
+\PY{c+c1}{\PYZsh{} Loop over each file in the data folder}
+\PY{k}{for} \PY{n}{filename} \PY{o+ow}{in} \PY{n}{glob}\PY{o}{.}\PY{n}{glob}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{*.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+    
+    \PY{c+c1}{\PYZsh{} Read the CSV file into a DataFrame}
+    \PY{n}{data} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{n}{filename}\PY{p}{,} \PY{n}{parse\PYZus{}dates}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+    
+    \PY{c+c1}{\PYZsh{} Append the data to the l}
+    \PY{c+c1}{\PYZsh{} ist}
+    \PY{n}{data\PYZus{}list}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{data}\PY{p}{)}
+    
+\PY{c+c1}{\PYZsh{} Concatenate the data in the list into a single DataFrame}
+\PY{n}{all\PYZus{}data} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{concat}\PY{p}{(}\PY{n}{data\PYZus{}list}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Convert the date column to a datetime object and extract the month}
+\PY{n}{all\PYZus{}data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{to\PYZus{}datetime}\PY{p}{(}\PY{n}{all\PYZus{}data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{utc}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+\PY{n}{all\PYZus{}data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{month}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{all\PYZus{}data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{dt}\PY{o}{.}\PY{n}{strftime}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{m}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{all\PYZus{}data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{year}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{all\PYZus{}data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{dt}\PY{o}{.}\PY{n}{strftime}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{Y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Group by station\PYZus{}id, year, and month then take the mean price}
+\PY{n}{agg\PYZus{}data} \PY{o}{=} \PY{n}{all\PYZus{}data}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{station\PYZus{}uuid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{year}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{month}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{agg}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{diesel}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{mean}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{e5}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{mean}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{e10}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{mean}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{)}\PY{o}{.}\PY{n}{round}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}\PY{o}{.}\PY{n}{reset\PYZus{}index}\PY{p}{(}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Save the aggregated data to a new CSV file}
+\PY{n}{agg\PYZus{}data}\PY{o}{.}\PY{n}{to\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{./aggregated\PYZus{}data.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{index}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Create an empty list to hold the data from each file}
+\PY{n}{data\PYZus{}list} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+
+\PY{c+c1}{\PYZsh{} Loop over each file in the data folder}
+\PY{k}{for} \PY{n}{filename} \PY{o+ow}{in} \PY{n}{glob}\PY{o}{.}\PY{n}{glob}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{C:}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{Users}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{ahmed}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{Desktop}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{Data Science}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{Git Repo}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{datavisualisation}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{aggregated}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{*.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+    
+    \PY{c+c1}{\PYZsh{} Read the CSV file into a DataFrame}
+    \PY{n}{data} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{n}{filename}\PY{p}{)}
+    
+    \PY{c+c1}{\PYZsh{} Append the data to the list}
+    \PY{n}{data\PYZus{}list}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{data}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Concatenate the data in the list into a single DataFrame}
+\PY{n}{combined\PYZus{}data} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{concat}\PY{p}{(}\PY{n}{data\PYZus{}list}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Save the combined data to a new CSV file}
+\PY{n}{combined\PYZus{}data}\PY{o}{.}\PY{n}{to\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{./agg\PYZus{}timeseries.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{index}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+\end{document}
